@@ -121,7 +121,7 @@ public class ImageEditorPanel extends JPanel implements KeyListener{
     }
 
     public Color[][] swapColor(Color[][] orig){
-         Color[][] changed = new Color[orig.length][orig[0].length];
+        Color[][] changed = new Color[orig.length][orig[0].length];
         for (int r = 0; r < orig.length; r++){
             for (int c = 0; c < orig[0].length; c++){
                 Color oldColor = orig[r][c];
@@ -135,6 +135,76 @@ public class ImageEditorPanel extends JPanel implements KeyListener{
 
         return changed;
 
+
+    }
+
+    public Color[][] vintage(Color[][] orig){
+        Color[][] changed = new Color[orig.length][orig[0].length];
+        for (int r = 0; r < orig.length; r++){
+            for (int c = 0; c < orig[0].length; c++){
+                Color oldColor = orig[r][c];
+                int red = oldColor.getBlue();
+                int green = oldColor.getRed();
+                int blue = oldColor.getGreen();
+                int newRed = (int)(0.393 * red + 0.769 * green + 0.189 * blue);
+                int newGreen = (int)(0.349 * red + 0.686 * green + 0.168 * blue);
+                int newBlue = (int)(0.272 * red + 0.534 * green + 0.131 * blue);
+                red = Math.min(newRed, 255);
+                green = Math.min(newGreen, 255);
+                blue = Math.min(newBlue, 255);
+                
+                Color newColor = new Color(red,green,blue);
+                changed[r][c] = newColor;
+            }
+        }
+
+        return changed;
+
+    }
+
+    public Color[][] posterize(Color[][] orig){
+       Color[] posterColors = {
+            new Color(255, 255, 255), // White (Feathers)
+            new Color(244, 17, 17),   // Red (Coat)
+            new Color(255, 219, 0),   // Yellow (Bill/Coins)
+            new Color(0, 0, 0)        // Black (Outlines)
+        };
+
+        Color[][] changed = new Color[orig.length][orig[0].length];
+
+        for (int r = 0; r < orig.length; r++) {
+            for (int c = 0; c < orig[0].length; c++) {
+                Color originalColor = pixels[r][c];
+
+                int minDistance = Integer.MAX_VALUE;
+                Color closestColor = posterColors[0]; 
+
+                int red = originalColor.getRed();
+                int green = originalColor.getGreen();
+                int blue = originalColor.getBlue();
+
+                for (Color paletteColor : posterColors) {
+                    int paletteRed = paletteColor.getRed();
+                    int paletteGreen = paletteColor.getGreen();
+                    int paletteBlue = paletteColor.getBlue();
+
+                    int dr = red - paletteRed;
+                    int dg = green - paletteGreen;
+                    int db = blue - paletteBlue;
+
+                    int distance = dr * dr + dg * dg + db * db;
+
+                    if (distance < minDistance) {
+                        minDistance = distance;
+                        closestColor = paletteColor;
+                    }
+                }
+                
+                changed[r][c] = closestColor;
+            }
+        }
+
+        return changed;
 
     }
 
@@ -184,6 +254,12 @@ public class ImageEditorPanel extends JPanel implements KeyListener{
         }
         if (e.getKeyChar() == 's'){
             pixels = swapColor(pixels);
+        }
+        if (e.getKeyChar() == 'o'){
+            pixels = vintage(pixels);
+        }
+        if (e.getKeyChar() == 'p'){
+            pixels = posterize(pixels);
         }
         repaint();
     }
