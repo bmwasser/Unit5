@@ -7,9 +7,6 @@ public class App {
 
         yourCar.downShift();
 
-
-
-
         System.out.println(myCar);
         System.out.println(yourCar);
     }
