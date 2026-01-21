@@ -2,15 +2,15 @@ public class Time{
     
     private int hour;
     private int minute;
-    private double second;
+    private int second;
 
     public Time() {
         this.hour = 0;
         this.minute = 0;
-        this.second = 0.0;
+        this.second = 0;
     }
 
-    public Time(int hour, int minute, double second) {
+    public Time(int hour, int minute, int second) {
         this.hour = hour;
         this.minute = minute;
         this.second = second;
@@ -24,24 +24,39 @@ public class Time{
         return this.minute;
     }
 
-    public double getSecond() {
+    public int getSecond() {
         return this.second;
     }
 
-    public void setHour(int hour) {
-        this.hour = hour;
+    public void setHour(int newHour) {
+        if (newHour >= 0 && newHour <= 23){
+            this.hour = newHour;
+        } else {
+            throw new IllegalArgumentException("Invalid hour: " + newHour);
+        }
+        
     }
 
-    public void setMinute(int minute) {
-        this.minute = minute;
+    public void setMinute(int newMinute) {
+        if (newMinute >= 0 && newMinute <= 59){
+            this.minute = newMinute;
+        } else {
+            throw new IllegalArgumentException("Invalid minute: " + newMinute);
+        }
+        
     }
 
-    public void setSecond(double second) {
-        this.second = second;
+    public void setSecond(int newSecond) {
+        if (newSecond >= 0 && newSecond <= 59){
+            this.second = newSecond;
+        } else {
+            throw new IllegalArgumentException("Invalid second: " + newSecond);
+        }
+        
     }
 
     public String toString() {
-        return String.format("%02d:%02d:%04.1f\n", this.hour, this.minute, this.second);
+        return String.format("%2d:%02d:%02d", this.hour, this.minute, this.second);
     }
 
 }
