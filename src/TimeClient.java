@@ -1,17 +1,19 @@
 public class TimeClient {
     
     public static void main(String[] args) {
-        Time time = new Time(11, 59, 59);
-        Time newTime = new Time();
-        System.out.println(newTime);
-        System.out.println(time); 
-        System.out.println(time.getHour()); 
-        System.out.println(time.getMinute());
-        System.out.println(time.getSecond());
-        newTime.setHour(5);
-        newTime.setMinute(35);
-        newTime.setSecond(45);
-        System.out.println(newTime);
+        Time t1 = new Time();
+        Time t2 = new Time(14, 21, 45);
+        Time t3 = new Time(0, 0, 0);
+        Time t4 = new Time(1, 38, 30);
+
+        System.out.println(t1);
+        System.out.println(t2);
+        System.out.println(t3);
+
+        System.out.println(t1.getHour() + "-" + t1.getMinute() + "-" + t1.getSecond());
+        System.out.println(t2.add(t4));
+        System.out.println(t2.subtract(t4));
+        System.out.println(t1.equals(t3));
     }
 
 

@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "RationalUnitTest",
+            "request": "launch",
+            "mainClass": "RationalUnitTest",
+            "projectName": "Unit5_bf837ff2"
+        },
+        {
+            "type": "java",
             "name": "TimeClient",
             "request": "launch",
             "mainClass": "TimeClient",
